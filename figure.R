@@ -1,14 +1,20 @@
-library("ggplot2")
-library("fishualize")
+library(ggplot2)
+library(fishualize)
+library(readr)
+library(forcats)
+library(dplyr)
+
+data <- read_csv("data/data_proportions.csv") %>%
+  mutate(name = fct_relevel(name, c("fi_high", "both_high", "cl_high")))
 
 plot <- 
-  ggplot(sum) + 
+  ggplot(data) + 
   geom_hline(yintercept = 0.5, color = "lightgrey", size = 0.4) +
   geom_hline(yintercept = 0.75, color = "lightgrey", size = 0.4) +
   geom_hline(yintercept = 0.25, color = "lightgrey", size = 0.4) +
   annotate("text", x = -Inf, y = c(0.3, 0.55, 0.8), 
-           label = c("0.25", "0.50", "0.75") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
-  #geom_text(aes(x = "fi_high", y = 0.6, label = "0.5")) +
+           label = c("0.25", "0.50", "0.75") , 
+           color = "grey", size = 3 , angle = 0, fontface = "bold", hjust = 1) +
   geom_bar(aes(name, value, fill = fun), stat = "identity",
            position = position_dodge(), alpha = 0.9, width = 0.7) +
   labs(y = "Proportion communities with increased vulnerability", x = "") +
@@ -22,15 +28,12 @@ plot <-
                                "Piscivory"),
                     name = "Proportion communities with increased functional vulnerability") +
   theme_void() +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), legend.position = c(0.5, 0.95), 
+  theme(legend.position = c(0.5, 0.95), 
         text = element_text(size = 12),
         legend.margin = margin(0,0,0,0), panel.spacing = unit(c(0,0,0,0), units = "cm"), 
-        legend.direction = "horizontal",
+        legend.direction = "horizontal"
   )  +
-  scale_y_continuous(limits = c(-0.3, 0.95), breaks = c(0,0.5, 1)) +
-  guides(fill = guide_legend(title.position="top", legend.title.align = 0.5, title.vjust = 1,)) +
+  scale_y_continuous(limits = c(-0.3, 0.95), breaks = c(0, 0.5, 1)) +
+  guides(fill = guide_legend(title.position="top", legend.title.align = 0.5, title.vjust = 1)) +
   coord_polar()
-
-ggsave("output/plots/figure_4_vuln_com.png", plot,  width = 6, height = 6)
-
+plot
