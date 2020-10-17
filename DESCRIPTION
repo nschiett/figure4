@@ -1,0 +1,19 @@
+Type: Compendium
+Package: Figure 4
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1
+Authors@R: 
+    person(given = "Nina M D",
+           family = "Schiettekatte",
+           role = c("aut", "cre"),
+           email = "nina.schiettekatte@gmail.com")
+Description: code to reproduce figure 4
+License: What license it uses
+Depends: 
+    dplyr,
+    fishualize,
+    forcats,
+    ggplot2,
+    readr
+Encoding: UTF-8
+LazyData: true
